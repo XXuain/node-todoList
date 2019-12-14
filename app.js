@@ -34,9 +34,11 @@ app.get("/", function(req, res) {
   });
 });
 
-// API
+/*
+ * API
+ */
+// add
 app.post("/addTodo", function(req, res) {
-  // 寫入資料
   let params = req.body.content;
   const todoRef = fireData.ref("todoList").push();
   todoRef.set({ content: params }).then(function() {
@@ -48,6 +50,25 @@ app.post("/addTodo", function(req, res) {
       });
     });
   });
+});
+
+// delet
+app.post("/deletTodo", function(req, res) {
+  let id = req.body.removeId;
+  // console.log("id", id);
+  fireData
+    .ref("todoList")
+    .child(id)
+    .remove()
+    .then(function() {
+      fireData.ref("todoList").once("value", function(snapshop) {
+        res.send({
+          success: true,
+          data: snapshop.val(),
+          msg: "刪除成功"
+        });
+      });
+    });
 });
 
 // 監聽 port

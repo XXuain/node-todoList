@@ -12,7 +12,7 @@
     <input type="submit" id="send" value="儲存" />
     <ul id="list">
       <% for (item in todoList) { %>
-      <li><%- todoList[item].content %><input type="button" name="" value="刪除" /></li>
+      <li><%- todoList[item].content %><input type="button" data-id="<%- item %>" value="刪除" /></li>
       <% } %>
     </ul>
     <script src="/js/all.js"></script>

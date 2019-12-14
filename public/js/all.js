@@ -26,3 +26,29 @@ send.addEventListener("click", function(e) {
     list.innerHTML = str;
   };
 });
+
+list.addEventListener("click", function(e) {
+  if (e.target.nodeName !== "INPUT") return;
+  const id = e.target.dataset.id;
+  let xhr = new XMLHttpRequest();
+  xhr.open("post", "/deletTodo");
+  xhr.setRequestHeader("Content-Type", "application/json");
+  let removeId = JSON.stringify({ removeId: id });
+  xhr.send(removeId);
+  xhr.onload = function() {
+    let res = JSON.parse(xhr.responseText);
+    // console.log(res);
+    if (!res.success) {
+      alert("刪除失敗");
+      return;
+    }
+    let resData = res.data;
+    let str = "";
+    for (i in resData) {
+      str += `<li>${resData[i].content}
+        <input type="button" data-id="${i}" value="刪除" />
+        </li>`;
+    }
+    list.innerHTML = str;
+  };
+});
