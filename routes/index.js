@@ -5,6 +5,7 @@ var firebase = require("../connections/firebase_connect");
 
 router.get("/", function(req, res, next) {
   firebaseDb.ref("list").once("value", function(snapshot) {
+    // 取得 session
     var auth = req.session.uid;
     res.render("index", {
       title: "六角學院留言板",
